@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIVERDALE ACADEMY AND DAY CARE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="school-name">Riverdale Academy and Day Care</h1>
+            <div class="school-address">
+                <p>21 Paikani Phiri Street Riverside, Chingola</p>
+                <p><i class="fas fa-phone"></i> 0967182428 | <i class="fas fa-phone-alt"></i> 0212 - 271983</p>
+            </div>
+            <p class="system-title">Payroll Management System</p>
+        </div>
+        
+        <div class="employee-form">
+            <!-- Personal Information Section -->
+            <div class="form-card">
+                <h2><i class="fas fa-user"></i> Personal Information</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="employeeId">Employee ID</label>
+                        <input type="text" id="employeeId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeName">Full Name</label>
+                        <input type="text" id="employeeName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nrc">NRC Number</label>
+                        <input type="text" id="nrc" pattern="\d{6}\/\d{2}\/\d{1}" 
+                               maxlength="11" placeholder="123456/12/1" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employment Details Section -->
+            <div class="form-card">
+                <h2><i class="fas fa-briefcase"></i> Employment Details</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="dateJoined">Date Joined</label>
+                        <input type="date" id="dateJoined" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option value="academic">Academic</option>
+                            <option value="administration">Administration</option>
+                            <option value="support">Support Staff</option>
+                            <option value="accounts">Accounts</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <select id="position" required>
+                            <option value="">Select Position</option>
+                            <optgroup label="Academic Staff">
+                                <option value="headTeacher">Head Teacher</option>
+                                <option value="deputyHead">Deputy Head Teacher</option>
+                                <option value="seniorTeacher">Senior Teacher</option>
+                                <option value="classTeacher">Class Teacher</option>
+                            </optgroup>
+                            <optgroup label="Administration">
+                                <option value="schoolAdmin">School Administrator</option>
+                                <option value="secretary">Secretary</option>
+                            </optgroup>
+                            <optgroup label="Support Staff">
+                                <option value="librarian">Librarian</option>
+                                <option value="counselor">School Counselor</option>
+                                <option value="nurse">School Nurse</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Information -->
+            <div class="form-card">
+                <h2><i class="fas fa-graduation-cap"></i> Academic Information</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="qualifications">Qualifications</label>
+                        <select id="qualifications" required>
+                            <option value="">Select Qualification</option>
+                            <option value="certificate">Certificate</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="degree">Bachelor's Degree</option>
+                            <option value="masters">Master's Degree</option>
+                            <option value="phd">PhD</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gradeTaught">Grade Taught</label>
+                        <select id="gradeTaught" required>
+                            <option value="">Select Grade</option>
+                            <optgroup label="Pre-School">
+                                <option value="babyClass">Baby Class</option>
+                                <option value="middleClass">Middle Class</option>
+                                <option value="reception">Reception</option>
+                            </optgroup>
+                            <optgroup label="Primary">
+                                <option value="grade1">Grade 1</option>
+                                <option value="grade2">Grade 2</option>
+                                <option value="grade3">Grade 3</option>
+                                <option value="grade4">Grade 4</option>
+                                <option value="grade5">Grade 5</option>
+                                <option value="grade6">Grade 6</option>
+                                <option value="grade7">Grade 7</option>
+                            </optgroup>
+                            <optgroup label="Junior Secondary">
+                                <option value="grade8">Grade 8</option>
+                                <option value="grade9">Grade 9</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="workingHours">Working Hours/Week</label>
+                        <input type="number" id="workingHours" min="0" max="40" value="40" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salary Information -->
+            <div class="form-card">
+                <h2><i class="fas fa-money-bill-wave"></i> Salary Information</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="basicSalary">Basic Salary (ZMW)</label>
+                        <input type="number" id="basicSalary" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="housingAllowance">Housing Allowance</label>
+                        <input type="number" id="housingAllowance" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transportAllowance">Transport Allowance</label>
+                        <input type="number" id="transportAllowance" required>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="responsibilityAllowance">Responsibility Allowance</label>
+                        <input type="number" id="responsibilityAllowance" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="overtime">Overtime Hours</label>
+                        <input type="number" id="overtime" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deductions -->
+            <div class="form-card">
+                <h2><i class="fas fa-calculator"></i> Deductions</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="napsa">NAPSA (5%)</label>
+                        <input type="number" id="napsa" value="5" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="loan">Loan Deduction</label>
+                        <input type="number" id="loan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salaryAdvance">Salary Advance</label>
+                        <input type="number" id="salaryAdvance" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-generate" onclick="generatePayslip()">
+                    <i class="fas fa-file-invoice"></i> Generate Payslip
+                </button>
+                <button type="button" class="btn-reset" onclick="resetForm()">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+        </div>
+        
+        <div id="payslip" class="payslip hidden">
+            <div class="payslip-actions">
+                <button class="btn-view" onclick="viewPayslip()">
+                    <i class="fas fa-eye"></i> View
+                </button>
+                <button class="btn-hide" onclick="hidePayslip()">
+                    <i class="fas fa-eye-slash"></i> Hide
+                </button>
+                <button class="btn-delete" onclick="deletePayslip()">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button class="btn-print" onclick="printPayslip()">
+                    <i class="fas fa-print"></i> Print
+                </button>
+            </div>
+            <div id="payslipDetails"></div>
+        </div>
+
+        <div id="savedPayslips" class="saved-payslips">
+            <!-- Saved payslips will be listed here -->
+        </div>
+
+        <div class="action-buttons">
+            <a href="work.html" class="action-button return-button">
+                <i class="fas fa-arrow-left"></i>
+                RETURN TO MAIN MENU
+            </a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
