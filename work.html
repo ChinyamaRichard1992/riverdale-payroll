@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RIVERDALE ACADEMY</title>
-    <link rel = "stylesheet" href = "work.css">
+    <link rel = "stylesheet" href = "/work.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
  
@@ -12,7 +12,7 @@
         // Register the service worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
                     console.log('Service Worker registered with scope:', registration.scope);
                 }).catch(function(error) {
                     console.error('Service Worker registration failed:', error);
@@ -715,7 +715,7 @@
     <div class="container" id="mainContainer">
         <div class="header-container">
             <div class="main-header">
-                <img src="eastlogo.jpg" alt="School Logo" class="school-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/120x120?text=School+Logo'">
+                <img src="/eastlogo.jpg" alt="School Logo" class="school-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/120x120?text=School+Logo'">
                 <div class="header-text">
                     <h1>Riverdale Academy</h1>
                     <div class="subtitle">Student Record System</div>
@@ -724,11 +724,11 @@
         </div>
 
         <div class="action-buttons">
-            <a href="index.html" class="action-button salary-button">
+            <a href="/index.html" class="action-button salary-button">
                 <i class="fas fa-money-bill-wave"></i>
                 PAYMENT OF SALARIES
             </a>
-            <a href="work.html" class="action-button return-button">
+            <a href="/work.html" class="action-button return-button">
                 <i class="fas fa-arrow-left"></i>
                 RETURN TO MAIN MENU
             </a>
@@ -1087,7 +1087,7 @@
                 '<p>21 PAIKANI PHIRI STREET RIVERSIDE, CHINGOLA</p>',
                 '<p>📞 0967182428 | ☎️ 0212 - 271983</p>',
                 '</div>',
-                '<img src="eastlogo.jpg" alt="School Logo" class="logo">',
+                '<img src="/eastlogo.jpg" alt="School Logo" class="logo">',
                 '</div>',
                 '<div class="employee-details">',
                 '<p><strong>Name:</strong> ' + data.name + '</p>',
@@ -1132,7 +1132,7 @@
         }
         </script>
     </div>
-   <script src= "work.js"></script>
+   <script src="/work.js"></script>
    <script>
     // Check if browser supports required features
     if ('serviceWorker' in navigator && 'localStorage' in window && 'indexedDB' in window) {
