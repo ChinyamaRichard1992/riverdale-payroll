@@ -3,11 +3,13 @@ services:
     name: riverdale-payroll
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    startCommand: gunicorn app:app
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
       - key: SUPABASE_URL
         value: https://liuwhsumfxznzjyfhbfe.supabase.co
       - key: SUPABASE_KEY
-        sync: false
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpdXdoc3VtZnh6bnpqeWZoYmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0MDM3MTYsImV4cCI6MjA1Mjk3OTcxNn0.utFOu_kjRltZcroLlyZ9YGoE2vcU47FGJZVXOqWUHfs
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: PORT
+        value: 10000
