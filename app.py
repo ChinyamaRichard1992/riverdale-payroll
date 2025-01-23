@@ -9,8 +9,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'your-secret-key')
 
 # Initialize Supabase client
-supabase_url = os.environ.get('SUPABASE_URL', "https://liuwhsumfxznzjyfhbfe.supabase.co")
-supabase_key = os.environ.get('SUPABASE_KEY', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpdXdoc3VtZnh6bnpqeWZoYmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc0MDM3MTYsImV4cCI6MjA1Mjk3OTcxNn0.utFOu_kjRltZcroLlyZ9YGoE2vcU47FGJZVXOqWUHfs")
+supabase_url = os.environ.get('SUPABASE_URL')
+supabase_key = os.environ.get('SUPABASE_KEY')
 supabase = create_client(supabase_url, supabase_key)
 
 def login_required(f):
@@ -65,10 +65,38 @@ def login():
             
     return render_template('login.html')
 
+@app.route('/callback')
+def callback():
+    code = request.args.get('code')
+    if code:
+        try:
+            # Exchange code for session
+            session = supabase.auth.exchange_code_for_session(code)
+            user = session.user
+            
+            # Get user role from our users table
+            user_response = supabase.from_('users').select('*').eq('id', user.id).single()
+            
+            session['user'] = {
+                'id': user.id,
+                'email': user.email,
+                'role': user_response.data.get('role', 'viewer')
+            }
+            
+            return redirect(url_for('work'))
+        except Exception as e:
+            return redirect(url_for('login'))
+    return redirect(url_for('login'))
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+@app.route('/api/user-role')
+@login_required
+def get_user_role():
+    return jsonify({'role': session['user'].get('role', 'viewer')})
 
 @app.route('/api/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
