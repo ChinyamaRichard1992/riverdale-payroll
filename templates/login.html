@@ -3,95 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Riverdale Academy Payroll</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Login - Riverdale Academy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
         .login-container {
-            max-width: 400px;
+            max-width: 900px;
             margin: 50px auto;
-            padding: 20px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        .form-group {
-            margin-bottom: 15px;
+        .logo-section {
+            background-color: #f8f9fa;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
+        .logo-section img {
+            max-width: 100%;
+            height: auto;
         }
-        .form-group input {
+        .form-section {
+            padding: 40px;
+        }
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+        .btn-primary {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .login-btn {
-            width: 100%;
-            padding: 10px;
-            background: #007bff;
-            color: white;
+            padding: 12px;
+            background-color: #0056b3;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
         }
-        .login-btn:hover {
-            background: #0056b3;
+        .btn-primary:hover {
+            background-color: #004494;
         }
-        .error-message {
-            color: red;
-            margin-top: 10px;
+        .links-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .links-section a {
+            color: #0056b3;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .links-section a:hover {
+            text-decoration: underline;
+        }
+        #errorMessage {
             display: none;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login to Riverdale Academy Payroll</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+    <div class="container">
+        <div class="login-container">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <div class="logo-section">
+                        <img src="{{ url_for('static', filename='eastlogo.jpg') }}" alt="Riverdale Academy Logo">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-section">
+                        <h2 class="text-center mb-4">Welcome Back</h2>
+                        <form id="loginForm">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                                <label for="email">Email address</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                <label for="password">Password</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                            <div class="alert alert-danger" id="errorMessage"></div>
+                        </form>
+                        <div class="links-section">
+                            <a href="#" id="forgotPassword">Forgot Password?</a>
+                            <span>|</span>
+                            <a href="#" id="signupLink">Don't have an account? Sign Up</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="login-btn">Login</button>
-            <div id="error-message" class="error-message"></div>
-        </form>
+        </div>
     </div>
 
+    <!-- Modal for Sign Up -->
+    <div class="modal fade" id="signupModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <label for="signupName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="signupName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="alert alert-danger" id="signupError" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Forgot Password -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="resetPasswordForm">
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="resetEmail" required>
+                        </div>
+                        <div class="alert alert-danger" id="resetError" style="display: none;"></div>
+                        <div class="alert alert-success" id="resetSuccess" style="display: none;"></div>
+                        <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
-            
-            try {
-                const response = await fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    window.location.href = '/work';
-                } else {
-                    errorMessage.textContent = data.error || 'Login failed';
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            const signupModal = new bootstrap.Modal(document.getElementById('signupModal'));
+            const forgotPasswordModal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
+
+            // Login Form Handler
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const errorMessage = document.getElementById('errorMessage');
+
+                try {
+                    const response = await fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        window.location.href = '/work';
+                    } else {
+                        errorMessage.textContent = data.error || 'Login failed. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorMessage.textContent = 'An error occurred. Please try again.';
                     errorMessage.style.display = 'block';
                 }
-            } catch (error) {
-                errorMessage.textContent = 'An error occurred. Please try again.';
-                errorMessage.style.display = 'block';
-            }
+            });
+
+            // Sign Up Form Handler
+            signupForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const errorMessage = document.getElementById('signupError');
+
+                if (password !== confirmPassword) {
+                    errorMessage.textContent = 'Passwords do not match';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        signupModal.hide();
+                        window.location.href = '/work';
+                    } else {
+                        errorMessage.textContent = data.error || 'Sign up failed. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorMessage.textContent = 'An error occurred. Please try again.';
+                    errorMessage.style.display = 'block';
+                }
+            });
+
+            // Reset Password Form Handler
+            resetPasswordForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('resetEmail').value;
+                const errorMessage = document.getElementById('resetError');
+                const successMessage = document.getElementById('resetSuccess');
+
+                try {
+                    const response = await fetch('/reset-password', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        errorMessage.style.display = 'none';
+                        successMessage.textContent = 'Password reset link has been sent to your email.';
+                        successMessage.style.display = 'block';
+                        setTimeout(() => {
+                            forgotPasswordModal.hide();
+                        }, 3000);
+                    } else {
+                        successMessage.style.display = 'none';
+                        errorMessage.textContent = data.error || 'Password reset failed. Please try again.';
+                        errorMessage.style.display = 'block';
+                    }
+                } catch (error) {
+                    successMessage.style.display = 'none';
+                    errorMessage.textContent = 'An error occurred. Please try again.';
+                    errorMessage.style.display = 'block';
+                }
+            });
+
+            // Show Sign Up Modal
+            document.getElementById('signupLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.show();
+            });
+
+            // Show Forgot Password Modal
+            document.getElementById('forgotPassword').addEventListener('click', function(e) {
+                e.preventDefault();
+                forgotPasswordModal.show();
+            });
         });
     </script>
 </body>
