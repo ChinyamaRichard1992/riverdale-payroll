@@ -5,6 +5,7 @@ import logging
 from functools import wraps
 from datetime import datetime, timezone
 import json
+from middleware import log_performance
 
 # Configure logging
 logging.basicConfig(
@@ -72,17 +73,20 @@ def internal_error(error):
     return render_template('500.html'), 500
 
 @app.route('/')
+@log_performance()
 def index():
     logger.info("Rendering index.html")
     return render_template('index.html')
 
 @app.route('/work')
 @login_required
+@log_performance()
 def work():
     logger.info("Rendering work.html")
     return render_template('work.html')
 
 @app.route('/login', methods=['GET', 'POST'])
+@log_performance()
 def login():
     if request.method == 'POST':
         data = request.get_json()
@@ -113,6 +117,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/callback')
+@log_performance()
 def callback():
     code = request.args.get('code')
     if code:
@@ -138,6 +143,7 @@ def callback():
     return redirect(url_for('login'))
 
 @app.route('/logout')
+@log_performance()
 def logout():
     session.clear()
     logger.info("User logged out")
@@ -145,12 +151,14 @@ def logout():
 
 @app.route('/api/user-role')
 @login_required
+@log_performance()
 def get_user_role():
     logger.info("Getting user role")
     return jsonify({'role': session['user'].get('role', 'viewer')})
 
 @app.route('/api/employees', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
+@log_performance()
 def handle_employees():
     if request.method == 'GET':
         try:
@@ -208,6 +216,7 @@ def handle_employees():
 
 @app.route('/api/payslips', methods=['GET', 'POST'])
 @login_required
+@log_performance()
 def handle_payslips():
     if request.method == 'GET':
         try:
@@ -228,6 +237,68 @@ def handle_payslips():
         except Exception as e:
             logger.error(f"POST payslip error: {str(e)}")
             return jsonify({'error': str(e)}), 500
+
+@app.route('/health')
+@log_performance()
+def health_check():
+    try:
+        # Test database connection
+        supabase.from_('users').select('count', count='exact').execute()
+        
+        health_data = {
+            'status': 'healthy',
+            'timestamp': datetime.now(timezone.utc).isoformat(),
+            'version': '1.0.0',
+            'database': 'connected',
+            'environment': os.environ.get('FLASK_ENV', 'production')
+        }
+        logger.info(f"Health check passed: {health_data}")
+        return jsonify(health_data)
+    except Exception as e:
+        error_data = {
+            'status': 'unhealthy',
+            'timestamp': datetime.now(timezone.utc).isoformat(),
+            'error': str(e)
+        }
+        logger.error(f"Health check failed: {error_data}")
+        return jsonify(error_data), 500
+
+@app.route('/metrics')
+@admin_required
+@log_performance()
+def metrics():
+    try:
+        # Get various metrics
+        users_count = supabase.from_('users').select('count', count='exact').execute()
+        employees_count = supabase.from_('employees').select('count', count='exact').execute()
+        payslips_count = supabase.from_('payslips').select('count', count='exact').execute()
+        
+        # Get recent activity
+        recent_payslips = supabase.from_('payslips').select('*').order('date', desc=True).limit(5).execute()
+        
+        metrics_data = {
+            'timestamp': datetime.now(timezone.utc).isoformat(),
+            'counts': {
+                'users': users_count.count,
+                'employees': employees_count.count,
+                'payslips': payslips_count.count
+            },
+            'recent_activity': {
+                'payslips': [
+                    {
+                        'id': p['id'],
+                        'employee_id': p['employee_id'],
+                        'date': p['date']
+                    } for p in recent_payslips.data
+                ]
+            }
+        }
+        
+        logger.info("Metrics retrieved successfully")
+        return jsonify(metrics_data)
+    except Exception as e:
+        logger.error(f"Error retrieving metrics: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
