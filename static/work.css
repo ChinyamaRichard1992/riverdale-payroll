@@ -1,0 +1,1740 @@
+/* Add these responsive design styles to your existing work.css */
+
+/* Base responsive layout */
+.container {
+    max-width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+/* Responsive table styles */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 15px;
+    max-width: 100%;
+}
+
+/* Responsive form styles */
+form {
+    max-width: 100%;
+    padding: 15px;
+}
+
+/* Responsive input fields */
+input[type="text"], 
+input[type="number"], 
+input[type="date"], 
+input[type="tel"], 
+input[type="email"], 
+select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsive grade counts */
+.grade-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.count-box {
+    flex: 0 1 calc(20% - 10px);
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Responsive dashboard */
+.dashboard {
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+/* Responsive buttons */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+button {
+    min-width: 120px;
+    margin: 5px;
+}
+
+/* Mobile-first responsive breakpoints */
+@media screen and (max-width: 768px) {
+    /* Adjustments for tablets and smaller screens */
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .count-box {
+        flex: 0 1 calc(33.33% - 10px);
+    }
+
+    .button-group button {
+        flex: 1 1 calc(50% - 10px);
+    }
+
+    /* Make tables responsive on mobile */
+    table {
+        display: block;
+        width: 100%;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        margin-bottom: 10px;
+        display: block;
+        border: 1px solid #ddd;
+    }
+
+    table td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Adjustments for mobile phones */
+    .count-box {
+        flex: 0 1 calc(50% - 10px);
+    }
+
+    .button-group button {
+        flex: 1 1 100%;
+    }
+
+    input, select, button {
+        font-size: 16px; /* Prevent zoom on mobile */
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10px auto;
+    }
+}
+
+/* Print styles */
+@media print {
+    /* Reset print settings */
+    @page {
+        size: A4;
+        margin: 1cm;
+    }
+
+    /* Hide everything initially */
+    body > * {
+        display: none;
+    }
+
+    /* Show only the payslip modal */
+    #payslipDisplayModal {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        background: white;
+    }
+
+    /* Show all payslip content */
+    .payslip-content,
+    .payslip-content * {
+        display: block;
+        visibility: visible;
+    }
+
+    /* Hide buttons during print */
+    .action-buttons {
+        display: none !important;
+    }
+
+    /* Layout adjustments */
+    .payslip-body {
+        padding: 20px;
+    }
+
+    /* Header layout */
+    .payslip-body header {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    /* Logo size */
+    .payslip-body img {
+        width: 100px;
+        height: auto;
+    }
+
+    /* Text sizes */
+    .payslip-body h2 { font-size: 16pt; }
+    .payslip-body h3 { font-size: 14pt; }
+    .payslip-body p { font-size: 10pt; }
+    
+    /* Table styles */
+    .salary-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+    }
+
+    .salary-details th,
+    .salary-details td {
+        padding: 8px;
+        border: 1px solid #000;
+        font-size: 10pt;
+    }
+
+    /* Footer */
+    .payslip-footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 9pt;
+    }
+
+    /* Remove modal styling */
+    .modal-content {
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* Additional responsive utilities */
+.hide-on-mobile {
+    display: none;
+}
+
+@media screen and (min-width: 769px) {
+    .hide-on-mobile {
+        display: block;
+    }
+}
+
+/* Responsive modal */
+.modal-content {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Responsive invoice */
+#invoiceContent {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Responsive search container */
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.search-container input {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Ensure buttons are touch-friendly on mobile */
+button, 
+input[type="submit"] {
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+/* Fix for iOS input zoom */
+@media screen and (max-width: 480px) {
+    input[type="text"], 
+    input[type="number"], 
+    input[type="date"], 
+    input[type="tel"], 
+    input[type="email"], 
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* Responsive grade summary */
+.grade-summary {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure proper spacing between elements */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Make sure modals are usable on mobile */
+.modal {
+    padding: 10px;
+}
+
+.modal-content {
+    padding: 15px;
+    margin: 10% auto;
+}
+
+/* Ensure proper button spacing */
+.button-group {
+    gap: 8px;
+    margin: 10px 0;
+}
+
+/* Make sure tables are readable on all devices */
+.scrollable-table {
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+
+/* Add fade indicator for scrollable content */
+.scrollable-table::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 15px;
+    background: linear-gradient(to right, transparent, #fff);
+    pointer-events: none;
+} 
+
+    
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        overflow: hidden;
+        padding: 0 20px;
+    }
+
+    h1, h2 {
+        color: #333;
+    }
+
+    .dashboard, .grade-summary, form {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"], input[type="number"], input[type="date"], input[type="tel"], input[type="email"], select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    input[type="submit"], button {
+        display: inline-block;
+        background: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    input[type="submit"]:hover, button:hover {
+        background: #555;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .search-container {
+        margin-bottom: 20px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .modal-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .modal-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .close {
+        position: sticky;
+        top: 0;
+        right: 10px;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .paid-full {
+        background-color: #d4edda;
+    }
+
+    .paid-partial {
+        background-color: #fff3cd;
+    }
+
+    .paid-none {
+        background-color: #f8d7da;
+    }
+
+    /* Add this CSS for scrollable tables */
+    .table-container {
+        overflow: auto; /* Enable both horizontal and vertical scrolling */
+        max-height: 400px; /* Set a maximum height for vertical scrolling */
+        margin-bottom: 20px; /* Add some space below the table */
+    }
+
+    /* Add this CSS for scrollable table */
+    .scrollable-table {
+        overflow-x: auto;
+        display: block;
+        max-width: 100%;
+    }
+
+    /* Optional: Add some styling for the table */
+    .scrollable-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .scrollable-table th, .scrollable-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    /* Add these styles for the grade count boxes */
+    .grade-counts {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        gap: 5px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 5px 0;
+    }
+
+    .count-box {
+        background-color: #87CEEB;
+        padding: 8px 12px;
+        border-radius: 5px;
+        color: #000;
+        font-weight: bold;
+        text-align: center;
+        min-width: 70px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .count-box.total {
+        background-color: #000080;
+        color: white;
+    }
+
+    /* Payment Search Styles */
+    .payment-search {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .payment-search h2 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .payment-search .search-fields {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .payment-search select {
+        flex: 1;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        min-width: 150px;
+    }
+
+    .payment-search button {
+        display: inline-block;
+        background-color: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .payment-search button:hover {
+        background-color: #5fb8e8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    #paymentSearchResults table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    #paymentSearchResults th, 
+    #paymentSearchResults td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    #paymentSearchResults th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    #paymentSearchResults tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    #paymentSearchResults tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    #noPaymentResults {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        background: #f9f9f9;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    /* Match the style of other form buttons */
+    #viewPaymentBtn,
+    #hidePaymentBtn {
+        background-color: #87CEEB;
+        color: #000;
+        font-weight: bold;
+    }
+
+    /* Responsive design for payment search */
+    @media screen and (max-width: 768px) {
+        .payment-search .search-fields {
+            flex-direction: column;
+        }
+        
+        .payment-search select {
+            width: 100%;
+        }
+        
+        .payment-search button {
+            width: 100%;
+            margin: 5px 0;
+        }
+    }
+
+    /* Payment Search Button Styles */
+    .payment-search button {
+        display: inline-block;
+        background-color: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .payment-search button:hover {
+        background-color: #5fb8e8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Specific styles for view/hide buttons */
+    #viewPaymentBtn,
+    #hidePaymentBtn {
+        background-color: #87CEEB;
+        color: #000;
+        font-weight: bold;
+    }
+
+    #viewPaymentBtn:hover,
+    #hidePaymentBtn:hover {
+        background-color: #5fb8e8;
+    }
+
+    /* Uniform Search Payment Styles */
+    .payment-search {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .payment-search h2 {
+        color: #333;
+        margin: 0 0 15px 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .payment-search .search-fields {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    .payment-search select,
+    .payment-search input[type="number"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        min-width: 150px;
+        margin: 5px 0;
+        background-color: white;
+    }
+
+    .payment-search button {
+        background-color: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 5px;
+        min-width: 120px;
+    }
+
+    .payment-search button:hover {
+        background-color: #5fb8e8;
+    }
+
+    #paymentSearchResults table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        background: white;
+    }
+
+    #paymentSearchResults th {
+        background-color: #f2f2f2;
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    #paymentSearchResults td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+
+    #paymentSearchResults tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    #noPaymentResults {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        background: #f9f9f9;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    /* Make buttons consistent with other sections */
+    #viewPaymentBtn,
+    #hidePaymentBtn {
+        background-color: #87CEEB;
+        color: #000;
+        font-weight: bold;
+        min-width: 120px;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .payment-search .search-fields {
+            flex-direction: column;
+        }
+        
+        .payment-search select,
+        .payment-search input[type="number"],
+        .payment-search button {
+            width: 100%;
+            margin: 5px 0;
+        }
+    }
+
+    /* Dashboard Stats Styles */
+    .dashboard h5 {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+    .dashboard h5 p {
+        flex: 1;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin: 0;
+        text-align: center;
+        border: 1px solid rgba(52, 152, 219, 0.1);
+    }
+
+    .dashboard h5 p span {
+        display: block;
+        font-size: 24px;
+        color: #3498db;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+
+    /* Responsive adjustment for mobile */
+    @media screen and (max-width: 768px) {
+        .dashboard h5 {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .dashboard h5 p {
+            width: 100%;
+        }
+    }
+
+    /* Horizontal Charts Layout */
+    .data-charts {
+        margin: 20px 0;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .charts-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .chart-box {
+        flex: 1;
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+        min-width: 160px;
+    }
+
+    .chart-box h3 {
+        margin: 0 0 10px 0;
+        color: #2c3e50;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .chart-box canvas {
+        width: 100% !important;
+        height: 150px !important;
+    }
+
+    /* Data Visualization Styles */
+    .data-visualization {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .charts-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .chart-box {
+        flex: 1;
+        min-width: 300px;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .chart-box h3 {
+        margin: 0 0 15px 0;
+        color: #2c3e50;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .chart-box canvas {
+        width: 100% !important;
+        height: 200px !important;
+    }
+
+    /* Responsive adjustments for charts */
+    @media screen and (max-width: 768px) {
+        .charts-row {
+            flex-direction: column;
+        }
+        
+        .chart-box {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+
+    /* Offline mode styles */
+    .offline-mode {
+        position: relative;
+    }
+
+    .offline-mode::after {
+        content: 'Offline Mode';
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 1000;
+    }
+
+    /* Style offline indicator */
+    .offline-indicator {
+        display: none;
+        background: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .offline-mode .offline-indicator {
+        display: block;
+    }
+
+    /* Add or update these styles in your work.css file */
+    #showPayrollBtn {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 24px;
+        font-size: 16px;
+        background-color: #87CEEB;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #showPayrollBtn:hover {
+        background-color: #5fb8e8;
+    }
+
+    #payrollModal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        overflow-y: auto;
+    }
+
+    #payrollModal .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 800px;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    #payrollModal .close {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #payrollModal .close:hover {
+        color: #666;
+    }
+
+    /* Add these styles for the header layout */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 10px 0;
+    }
+
+    .header-container h1 {
+        margin: 0;
+        flex: 1;
+    }
+
+    #showPayrollBtn {
+        background-color: #87CEEB;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 20px;
+        white-space: nowrap;
+        transition: background-color 0.3s ease;
+    }
+
+    #showPayrollBtn:hover {
+        background-color: #5fb8e8;
+    }
+
+    /* QR Code styles */
+    #qrcode {
+        display: inline-block;
+        background: white;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    #payslipQR {
+        display: inline-block;
+    }
+
+    #payslipQR img {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+
+    @media print {
+        #qrcode {
+            position: absolute;
+            top: 20px;
+            right: 130px;
+            background: white !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    }
+
+    /* Add these styles to your work.css file */
+    .deductions-section {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .deduction-field {
+        margin-bottom: 15px;
+    }
+
+    .deduction-field label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .deduction-field input,
+    .deduction-field select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+
+    .deduction-field input[readonly] {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+    }
+
+    .deductions-summary {
+        margin-top: 20px;
+        padding: 15px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .deductions-summary div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .deductions-summary .deduction {
+        color: #dc3545;
+    }
+
+    .deductions-summary .net-salary {
+        border-top: 2px solid #ddd;
+        margin-top: 10px;
+        padding-top: 10px;
+        font-weight: bold;
+    }
+
+    .form-actions {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .generate-payslip {
+        background: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .generate-payslip:hover {
+        background: #5fb8e8;
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #payslipDisplayModal,
+        #payslipDisplayModal * {
+            visibility: visible;
+        }
+        #payslipDisplayModal {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .no-print {
+            display: none !important;
+        }
+        .payslip-content {
+            padding: 20px;
+            margin: 0;
+            box-shadow: none;
+        }
+    }
+
+    /* Payslip Styles */
+    .payslip-content {
+        background: white;
+        padding: 20px;
+        max-width: 800px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .payslip-header {
+        border-bottom: 2px solid #87CEEB;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        width: 80px;
+        height: auto;
+    }
+
+    .school-info {
+        text-align: center;
+    }
+
+    .school-info h2 {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 24px;
+    }
+
+    .school-info h3 {
+        margin: 10px 0;
+        color: #2c3e50;
+    }
+
+    .employee-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .info-group {
+        flex: 1;
+        margin: 0 10px;
+    }
+
+    .info-group label {
+        font-weight: bold;
+        color: #666;
+    }
+
+    .salary-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    .salary-details th,
+    .salary-details td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .table-header th {
+        background: #87CEEB;
+        color: #000;
+        font-size: 16px;
+    }
+
+    .deduction-header td {
+        background: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .amount {
+        text-align: right;
+    }
+
+    .deduction .amount {
+        color: #dc3545;
+    }
+
+    .total-deductions {
+        background: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .net-salary {
+        background: #e8f5e9;
+        font-weight: bold;
+    }
+
+    .payment-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 20px 0;
+    }
+
+    .action-buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .print-btn, .close-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 0 10px;
+    }
+
+    .print-btn {
+        background: #87CEEB;
+        color: #000;
+    }
+
+    .close-btn {
+        background: #dc3545;
+        color: white;
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .payslip-content,
+        .payslip-content * {
+            visibility: visible;
+        }
+        .payslip-content {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .action-buttons {
+            display: none;
+        }
+    }
+
+    /* Payslip Print Styles */
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        
+        #payslipDisplayModal,
+        #payslipDisplayModal * {
+            visibility: visible;
+        }
+        
+        #payslipDisplayModal {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .no-print {
+            display: none !important;
+        }
+        
+        .payslip-content {
+            box-shadow: none;
+            border: none;
+        }
+        
+        .logo {
+            max-width: 80px;
+            height: auto;
+        }
+        
+        .salary-table {
+            page-break-inside: avoid;
+        }
+        
+        #qrCodeContainer {
+            page-break-inside: avoid;
+        }
+    }
+
+    /* Payslip Styles */
+    .payslip-content {
+        background: white;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 800px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .salary-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    .salary-table th,
+    .salary-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .salary-table th {
+        background: #87CEEB;
+        color: #000;
+    }
+
+    .amount {
+        text-align: right;
+    }
+
+    .deduction {
+        color: #dc3545;
+    }
+
+    .total-row {
+        background: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .net-salary {
+        background: #e8f5e9;
+        font-weight: bold;
+    }
+
+    /* Payroll Styles */
+    .action-button {
+        background: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 20px;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .generate-btn {
+        background: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #deductionsTotal {
+        margin-top: 15px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    /* Print styles for payslip */
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+        
+        .payslip-content {
+            padding: 20px;
+            margin: 0;
+        }
+    }
+
+    /* Add these styles for the enhanced payroll form */
+    .form-section {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-section h3 {
+        margin-top: 0;
+        color: #333;
+        border-bottom: 2px solid #87CEEB;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+    .salary-summary {
+        background: #e8f5e9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .salary-summary div {
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #87CEEB;
+        outline: none;
+        box-shadow: 0 0 5px rgba(135, 206, 235, 0.3);
+    }
+
+    /* Add these styles if they're not already there */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 20px;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .action-button {
+        background: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+
+    /* Add these essential styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 1000px;
+        border-radius: 8px;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .action-button {
+        background: #87CEEB;
+        color: #000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 15px 0;
+    }
+
+    /* Form styles */
+    .form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        flex: 1;
+    }
+
+    .form-section {
+        background: #f8f9fa;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+    }
+
+    /* New horizontal form styles */
+    .horizontal-form {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 10px;
+    }
+
+    .form-section {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
+    }
+
+    .form-section h3 {
+        color: #1a5f7a;
+        margin: -20px -20px 20px -20px;
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        border-bottom: 2px solid #87CEEB;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #87CEEB;
+        box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.25);
+        outline: none;
+    }
+
+    .salary-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .salary-summary div {
+        background: white;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .generate-btn {
+        background: #1a5f7a;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .generate-btn:hover {
+        background: #154c61;
+    }
+
+    /* Responsive design */
+    @media (max-width: 1200px) {
+        .form-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .salary-summary {
+            grid-template-columns: 1fr;
+        }
+    }

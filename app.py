@@ -1,11 +1,15 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from supabase import create_client
 import os
 from functools import wraps
 from datetime import datetime, timezone
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, 
+    static_url_path='/static',
+    static_folder='static',
+    template_folder='templates'
+)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'your-secret-key')
 
 # Debug: Print environment variables
@@ -46,11 +50,13 @@ def admin_required(f):
 
 @app.route('/')
 def index():
+    print("Rendering index.html")  # Debug log
     return render_template('index.html')
 
 @app.route('/work')
 @login_required
 def work():
+    print("Rendering work.html")  # Debug log
     return render_template('work.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -79,6 +85,7 @@ def login():
             print(f"Login error: {str(e)}")
             return jsonify({'error': str(e)}), 401
             
+    print("Rendering login.html")  # Debug log
     return render_template('login.html')
 
 @app.route('/callback')
