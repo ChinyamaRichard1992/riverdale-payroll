@@ -8,10 +8,25 @@ import json
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'your-secret-key')
 
-# Initialize Supabase client
+# Debug: Print environment variables
+print("Environment Variables:")
+print(f"SUPABASE_URL: {os.environ.get('SUPABASE_URL')}")
+print(f"SUPABASE_KEY: {os.environ.get('SUPABASE_KEY')}")
+
+# Initialize Supabase client with error handling
 supabase_url = os.environ.get('SUPABASE_URL')
 supabase_key = os.environ.get('SUPABASE_KEY')
-supabase = create_client(supabase_url, supabase_key)
+
+if not supabase_url:
+    raise ValueError("SUPABASE_URL environment variable is not set")
+if not supabase_key:
+    raise ValueError("SUPABASE_KEY environment variable is not set")
+
+try:
+    supabase = create_client(supabase_url, supabase_key)
+except Exception as e:
+    print(f"Error creating Supabase client: {str(e)}")
+    raise
 
 def login_required(f):
     @wraps(f)
@@ -61,6 +76,7 @@ def login():
             
             return jsonify({'success': True, 'role': user_response.data.get('role')})
         except Exception as e:
+            print(f"Login error: {str(e)}")
             return jsonify({'error': str(e)}), 401
             
     return render_template('login.html')
@@ -85,6 +101,7 @@ def callback():
             
             return redirect(url_for('work'))
         except Exception as e:
+            print(f"Callback error: {str(e)}")
             return redirect(url_for('login'))
     return redirect(url_for('login'))
 
@@ -106,6 +123,7 @@ def handle_employees():
             response = supabase.from_('employees').select('*').execute()
             return jsonify(response.data)
         except Exception as e:
+            print(f"GET employees error: {str(e)}")
             return jsonify({'error': str(e)}), 500
             
     if request.method == 'POST':
@@ -118,6 +136,7 @@ def handle_employees():
             response = supabase.from_('employees').insert(data).execute()
             return jsonify(response.data)
         except Exception as e:
+            print(f"POST employee error: {str(e)}")
             return jsonify({'error': str(e)}), 500
             
     if request.method == 'PUT':
@@ -131,6 +150,7 @@ def handle_employees():
             response = supabase.from_('employees').update(data).eq('id', employee_id).execute()
             return jsonify(response.data)
         except Exception as e:
+            print(f"PUT employee error: {str(e)}")
             return jsonify({'error': str(e)}), 500
             
     if request.method == 'DELETE':
@@ -142,6 +162,7 @@ def handle_employees():
             response = supabase.from_('employees').delete().eq('id', employee_id).execute()
             return jsonify({'success': True})
         except Exception as e:
+            print(f"DELETE employee error: {str(e)}")
             return jsonify({'error': str(e)}), 500
 
 @app.route('/api/payslips', methods=['GET', 'POST'])
@@ -152,6 +173,7 @@ def handle_payslips():
             response = supabase.from_('payslips').select('*').execute()
             return jsonify(response.data)
         except Exception as e:
+            print(f"GET payslips error: {str(e)}")
             return jsonify({'error': str(e)}), 500
             
     if request.method == 'POST':
@@ -161,6 +183,7 @@ def handle_payslips():
             response = supabase.from_('payslips').insert([data]).execute()
             return jsonify(response.data[0])
         except Exception as e:
+            print(f"POST payslip error: {str(e)}")
             return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
