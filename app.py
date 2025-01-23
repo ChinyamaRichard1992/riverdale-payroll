@@ -80,9 +80,10 @@ def create_app(test_config=None):
     @app.route('/')
     @log_performance()
     def index():
-        logger.info("Rendering index.html")
-        return render_template('index.html')
-    
+        if 'user' in session:
+            return redirect(url_for('work'))
+        return redirect(url_for('login'))
+
     @app.route('/work')
     @login_required
     @log_performance()
@@ -93,6 +94,11 @@ def create_app(test_config=None):
     @app.route('/login', methods=['GET', 'POST'])
     @log_performance()
     def login():
+        if request.method == 'GET':
+            if 'user' in session:
+                return redirect(url_for('work'))
+            return render_template('login.html')
+            
         if request.method == 'POST':
             data = request.get_json()
             email = data.get('email')
@@ -105,30 +111,29 @@ def create_app(test_config=None):
                         "password": password
                     })
                     
-                    user_response = app.supabase.from_('users').select('*').eq('id', auth_response.user.id).single()
+                    # Get user role from the users table
+                    user_response = app.supabase.from_('users').select('role').eq('id', auth_response.user.id).execute()
+                    role = user_response.data[0]['role'] if user_response.data else 'viewer'
                     
                     session['user'] = {
                         'id': auth_response.user.id,
                         'email': email,
-                        'role': user_response.data.get('role', 'viewer')
+                        'role': role
                     }
                 else:
-                    # For testing, simulate successful login
+                    # For testing
                     session['user'] = {
                         'id': 'test-user-id',
                         'email': email,
-                        'role': 'admin' if email == 'admin@test.com' else 'viewer'
+                        'role': 'admin' if email == 'admin@example.com' else 'viewer'
                     }
                 
                 logger.info(f"Successful login for user: {email}")
-                return jsonify({'success': True, 'role': session['user']['role']})
+                return jsonify({'success': True})
             except Exception as e:
                 logger.error(f"Login error for user {email}: {str(e)}")
                 return jsonify({'error': str(e)}), 401
                 
-        logger.info("Rendering login.html")
-        return render_template('login.html')
-    
     @app.route('/callback')
     @log_performance()
     def callback():
